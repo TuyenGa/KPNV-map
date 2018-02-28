@@ -5,7 +5,6 @@ exports.up = function(knex, Promise) {
     .createTable('admins',(table) => {
       table.increments('id').primary();
       table.specificType('email','char(80)').unique().notNullable();
-
     })
 };
 

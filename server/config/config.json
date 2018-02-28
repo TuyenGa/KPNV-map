@@ -4,7 +4,7 @@
     "port": 5432,
     "username": "postgres",
     "password": "anhtuyen9x",
-    "database": "loan",
+    "database": "myservice",
     "dialect": "postgres",
     "schema": "public",
     "logging": false

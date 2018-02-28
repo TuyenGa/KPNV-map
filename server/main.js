@@ -21,7 +21,7 @@ require('./routes/router')(router);
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-const port = 10004;
+const port = 10005;
 
 app.listen(port, () => {
   console.log(`Server start at http://localhost:${port}`)
