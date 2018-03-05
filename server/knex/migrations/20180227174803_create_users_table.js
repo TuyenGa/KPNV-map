@@ -5,6 +5,10 @@ exports.up = function(knex, Promise) {
     .createTable('users',function(table){
       table.increments('id').primary();
       table.specificType('email','char(80)').unique().notNullable();
+      table.specificType('password','char(60)').notNullable();
+      table.string('name',[200]).notNullable();
+      table.timestamp('created_at').defaultTo(knex.fn.now());
+      table.timestamp('updated_at').defaultTo(knex.fn.now());
     })
 };
 

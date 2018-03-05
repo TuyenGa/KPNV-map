@@ -5,7 +5,11 @@ class Users {
     return db.any(`
       SELECT
       id,
-      email
+      email,
+      name,
+      password,
+      created_at,
+      updated_at
       FROM users
     `)
   }
@@ -14,10 +18,12 @@ class Users {
     return db.one({
       name: 'add-user',
       text: `
-        Insert Into users(email) values ($1) returning *
+        Insert Into users(email,password,name) values ($1,$2,$3) returning *
       `,
       values: [
-        data.email
+        data.email,
+        data.pass,
+        data.name
       ]
     })
   }
@@ -39,20 +45,27 @@ class Users {
     })
   }
   findUserByID(id){
-    return db.one(`
+    return db.oneOrNone(`
       SELECT
       id,
-      email
+      email,
+      password,
+      name
+
       FROM users
       WHERE id = $1
     `,[id])
   }
   findUserByEmail(email){
-    return db.one(`
+    return db.oneOrNone(`
       SELECT
       id,
-      email
+      email,
+      password,
+      name
+
       FROM users
+
       WHERE email = $1
     `,[email])
   }
@@ -60,6 +73,26 @@ class Users {
     return db.one(`
       DELETE FROM users WHERE id = $1 returning *
     `,[id])
+  }
+  signin(data){
+    return db.oneOrNone({
+      name: 'Login',
+      text: `
+        SELECT
+        email,
+        password,
+        name
+
+        FROM users
+
+        WHERE email = $1 and password = $2
+
+      `,
+      values: [
+        data.email,
+        data.password
+      ]
+    })
   }
 }
 
